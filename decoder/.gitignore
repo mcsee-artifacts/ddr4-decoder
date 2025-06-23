@@ -1,0 +1,6 @@
+.idea/
+/xmldig2csv
+venv
+venv2
+/.envrc
+/.python-version

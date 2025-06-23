@@ -1,0 +1,43 @@
+' Read a LeCroy XMLdig file (digital data)
+' Write those data into a ASCII text file, comma separated.
+' This file can be open with Excel
+' Copyright LeCroy corporation
+' Note that this conversion can be slow for large digital waveform
+
+Path = "C:\Temp\Waveforms\wfms\"
+FileName = "Digital1--TEST--00002" '<= Change file name here to match target file name
+
+Set xmlDOMDoc = CreateObject("Msxml2.DOMDocument.6.0")
+
+If xmlDOMDoc.Load(Path & FileName & ".XMLdig") Then
+
+    Set xmlNode = xmlDOMDoc.selectSingleNode("LeCroyXStreamDSOdata/Header/ILecDigitalResult/BusInfo/NumLines")
+    NumLines = xmlNode.nodeTypedvalue
+    'MsgBox "NumLines = " & NumLines
+    
+    Set xmlNode = xmlDOMDoc.selectSingleNode("LeCroyXStreamDSOdata/Header/ILecDigitalResult/NumSamples")
+    NumSamples = xmlNode.nodeTypedvalue
+    'MsgBox "NumSamples = " & NumSamples
+    
+    Set xmlNode = xmlDOMDoc.selectSingleNode("LeCroyXStreamDSOdata/Data/Segment/BinaryData")
+    xmlNode.dataType = "bin.base64"
+    DigitalData = xmlNode.nodeTypedvalue
+    
+    Set FSO = CreateObject("Scripting.FileSystemObject")
+    Set FileOut = FSO.OpenTextFile(Path & FileName & ".csv", 2, True)  
+          
+    IndexInData = 1
+    For i = 1 To NumLines
+		for j = 1 to NumSamples
+			bit = AscB(MidB(DigitalData,IndexInData,1))
+			FileOut.Write bit & ","
+			IndexInData = IndexInData + 1
+		Next
+		FileOut.WriteLine
+    Next    
+    
+    FileOut.Close   
+     
+Else
+    MsgBox "Error: " & xmlDOMDoc.parseError.reason
+End If
