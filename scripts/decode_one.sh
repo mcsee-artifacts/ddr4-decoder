@@ -11,5 +11,5 @@ export DATA_DIR="${XMLDIG_DIR}/data"
 
 cd "$HOME/git/teledyne-scope/decoder"
 source ../decoder/venv/bin/activate
-python3 ../decoder/decode.py -e .
+python3 ../decoder/decode.py --ddr4 -e .
 

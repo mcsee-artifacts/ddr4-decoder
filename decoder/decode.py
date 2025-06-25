@@ -27,8 +27,7 @@ def main():
     parser.add_argument("-e", '--expname',
                         type=str,
                         required=True,
-                        help='the experiment name, i.e., folder name in the XMLDIG_DIR directory; e.g.: '
-                             '20220919_155000_decoder_test_newScope')
+                        help='the experiment name, i.e., folder name in the XMLDIG_DIR directory; e.g.: '20220919_155000_decoder_test_newScope')
     parser.add_argument("-o", "--out-file",
                         default=None,
                         type=str,

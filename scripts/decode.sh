@@ -6,7 +6,7 @@ export DATA_DIR="${XMLDIG_DIR}/data"
 PYTHON_BIN_DIR="../decoder/venv/bin"
 
 for f in `find ${XMLDIG_DIR} -mindepth 1 -maxdepth 1 -type d -not -path './data' -exec basename {} \;`; do 
-	"$PYTHON_BIN_DIR/python3" ../decoder/decode.py -e "$f"
+	"$PYTHON_BIN_DIR/python3" ../decoder/decode.py --ddr4 -e "$f"
 done
 
 
